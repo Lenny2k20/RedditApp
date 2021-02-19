@@ -3,8 +3,8 @@ import { Article } from './article/article.model';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: '/app.component.html',
+  styleUrls: ['/app.component.css']
 })
 export class AppComponent {
   articles:Article[];
@@ -13,11 +13,19 @@ export class AppComponent {
     this.articles=[
       new Article("Angular","http://angluar.io",5),
       new Article("Google","http://google.ie",3),
-      new Article("TikTok","http://tiktok.com",1)
+      new Article("TikTok","http://tiktok.com",2)
     ]
   }
   addArticle(title:HTMLInputElement, link:HTMLInputElement):Boolean {
-    console.log(`Adding Article Title $(title.value); and adding article link $(link.value);`);
+    this.articles.push(new Article(title.value, link.value,5));
+    title.value='';
+    link.value='';
+
+    console.log(`Adding Article Title :$(title.value) and adding article link :$(link.value)`);
     return false;
+  }
+
+  sortedArticle() : Article[]{
+    return this.articles.sort((a:Article,b: Article) => b.votes - a.votes);
   }
 }
